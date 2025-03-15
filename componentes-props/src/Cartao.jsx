@@ -1,17 +1,14 @@
 const Cartao = (props) => {
-    return(
-        // .card>(.card-header.text-muted+.card-body)
+    return (
         <div className="card">
-            <div className="card-header text-muted">
+            <div className="card-header text-mute">
                 {props.cabecalho}
             </div>
+
             <div className="card-body">
-                {props.children}   
+                {props.children}
             </div>
         </div>
     )
 }
-
-
-
-export default Cartao
+export default Cartao;
