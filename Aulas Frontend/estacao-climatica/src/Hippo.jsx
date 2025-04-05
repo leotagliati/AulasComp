@@ -1,9 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-function Hippo() {
-    return (
-        <i className="fa-hippo fas fa-3x"></i>
-    );
+const Hippo = () => {
+  return (
+    <div >
+    <i className="fa-hippo fas fa-3x"></i>
+    <i className="fa-hippo fas fa-2x fa-flip-horizontal"></i>
+    <i className="fa-hippo fas fa"></i>
+    <i className="fa-hippo fas fa"></i>
+    </div>
+  )
 }
-
-export default Hippo;
+export default Hippo
