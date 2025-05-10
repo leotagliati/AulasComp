@@ -27,12 +27,6 @@ app.get('/lembretes', (req, res) => {
 // POST /lembretes () => {}
 // localhost:4000/lembretes
 app.post('/lembretes', (req, res) => {
-    // 1. Pegar o texto do lembrete
-    // 2. Criar um objeto com id e texto
-    // 3. Adicionar o objeto no baseLembretes
-    // 4. incrementar o id
-    // 5. Retornar o objeto criado
-
     const { texto } = req.body // Desestrutura o texto do corpo da requisição
     const lembrete = {
         id: id,
