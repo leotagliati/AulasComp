@@ -22,6 +22,7 @@ export default class App extends React.Component {
   onBuscaRealizada = (termo) => {
     pexelsClient.get('/search', {
       params: {
+        per_page: 2,
         query: termo
       }
     })
