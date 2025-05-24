@@ -11,13 +11,11 @@ app.use(express.json());
 // com os campos tipo e dados
 const funcoes = {
     ObservacaoCriada: async (observacao) => {
-        const { texto } = observacao
-        if (texto.includes('importante')) {
-            observacao.status = 'importante'
-        } else {
-            observacao.status = 'comum'
-        }
-        await axios.post('http://localhost:10000/eventos', {
+        observacao.status =
+            observacao.texto.includes(palavraChave)
+                ? 'importante'
+                : 'comum'
+        await axios.post('http://localhost:5200/eventos', {
             tipo: 'ObservacaoClassificada',
             dados: observacao
         })
@@ -30,8 +28,11 @@ app.post('/eventos', async function (req, res) {
         await funcoes[evento.tipo](evento.dados)
     } catch (error) {
         // Descarta o erro
+        console.log('Erro ao processar evento no Classificacoes', error)
     }
-    res.end()
+    finally {
+        res.end()
+    }
 })
 
 

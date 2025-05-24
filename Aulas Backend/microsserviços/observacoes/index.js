@@ -22,12 +22,14 @@ const baseObservacoes = {}
 // Esse tipo de evento deve ser traduzido para outro do tipo observacaoAtualizada
 // e enviado para o barramento
 const funcoes = {
-    ObservacaoClassificada: (observacao) => {
-        const { idLembrete } = observacao
-        const observacoes = baseObservacoes[idLembrete] || []
-        const index = observacoes.findIndex(observacaoBase => observacaoBase.id === observacao.id)
-        observacoes[index].status = observacao.status
-
+    ObservacaoClassificada: async function (observacao) {
+        const observacoes = baseObservacoes[observacao.idLembrete]
+        const obsParaAtualizar = observacoes.find(o => o.id === observacao.id)
+        obsParaAtualizar.status = observacao.status
+        await axios.post('http://localhost:5200/eventos', {
+            tipo: 'ObservacaoAtualizada',
+            dados: observacao
+        })
     }
 }
 
@@ -52,7 +54,7 @@ app.post('/lembretes/:idLembrete/observacoes', async (req, res) => {
     const observacoes = baseObservacoes[idLembrete] || []
     observacoes.push(observacao)
     baseObservacoes[idLembrete] = observacoes
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post('http://localhost:5200/eventos', {
         tipo: "ObservacaoCriada",
         dados: observacao
     })
@@ -61,20 +63,33 @@ app.post('/lembretes/:idLembrete/observacoes', async (req, res) => {
 app.post('/eventos', async (req, res) => {
     observacao = req.body
     funcoes[ObservacaoClassificada](observacao)
-    await axios.post('http://localhost:10000/eventos', {
+    await axios.post('http://localhost:5200/eventos', {
         tipo: "ObservacaoAtualizada",
         dados: observacao
     })
 })
 
-app.post('/eventos', (req, res) => {
-    const evento = req.body
-    console.log(evento)
-    res.end()
+app.post('/eventos', async (req, res) => {
+    try {
+        const evento = req.body
+        console.log(evento)
+        await funcoes[evento.tipo](evento.dados)
+
+    } catch (error) {
+        // Descarta o erro
+        console.log('Erro ao processar evento no Observacoes', error)
+
+    }
+    finally {
+        res.end()
+    }
 })
 
 
 const port = 5000
 app.listen(port, () => {
+    console.clear()
+    console.log('-------------------------------------------')
     console.log(`Observações. Porta ${port}.`)
+    console.log('-------------------------------------------')
 })

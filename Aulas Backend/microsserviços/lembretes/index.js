@@ -29,28 +29,41 @@ app.post('/lembretes', (req, res) => {
   const lembrete = { id, texto }
   baseLembretes[id] = lembrete
   id++
-  axios.post('http://localhost:10000/eventos', {
+  axios.post('http://localhost:5200/eventos', {
     tipo: 'LembreteCriado',
     dados: lembrete
   })
-  .then((resAxios) => {
+    .then((resAxios) => {
 
-  })
-  .catch((e) => {
-    console.log(e)
-  })
-  .finally(() =>{
-    res.status(201).json(lembrete)
-  })
+    })
+    .catch((e) => {
+      console.log('Erro ao enviar evento para o barramento', e.message)
+    })
+    .finally(() => {
+      res.status(201).json(lembrete)
+    })
 })
 
 //POST /eventos
-app.post('/eventos', (req, res) => {
-  console.log(req.body)
-  res.end()
+app.post('/eventos', async (req, res) => {
+  try {
+    console.log('Evento recebido no Lembretes:')
+    console.log(req.body)
+
+  } catch (error) {
+    // Descarta o erro
+    console.log('Erro ao processar evento no Lembretes', error)
+
+  }
+  finally {
+    res.end()
+  }
 })
 
 const port = 4000
 app.listen(port, () => {
+  console.clear()
+  console.log('-------------------------------------------')
   console.log(`Lembretes. Porta ${port}.`)
+  console.log('-------------------------------------------')
 })
