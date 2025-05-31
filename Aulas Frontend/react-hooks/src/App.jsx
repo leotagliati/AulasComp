@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import Accordion from './components/Accordion'
+import Busca from './components/Busca'
 const items = [
   {
     title: 'Java',
@@ -18,10 +19,13 @@ const items = [
 ]
 function App() {
 
+  const expressaoJSX = <Busca />
   return (
     <>
       <div>
-        <Accordion items = {items} />
+        {/* <Accordion items={items} /> */}
+        {expressaoJSX}
+
       </div>
     </>
   )
