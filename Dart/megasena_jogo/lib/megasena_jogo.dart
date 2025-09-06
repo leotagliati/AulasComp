@@ -26,6 +26,6 @@ List<int> generateGame() {
 void showScore(List<int> userList, List<int> gameList)
 {
   for (var i = 0; i < 6; i++) {
-    if(userList[i])
+    // if(userList[i])
   }
 }
