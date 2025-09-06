@@ -1,0 +1,15 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: ecm516-lembretes
+spec:
+  containers:
+        - name: ecm516-lembretes
+          image: leotagliati/ecm516-lembretes:0.0.2
+          resources:
+            limits:
+              memory: 256Mi
+              cpu: 1
+            requests:
+              memory: 256Mi
+              cpu: 1

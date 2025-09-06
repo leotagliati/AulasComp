@@ -64,6 +64,7 @@ const port = 4000
 app.listen(port, () => {
   console.clear()
   console.log('-------------------------------------------')
+  console.log("agora usando dockerhub")
   console.log(`Lembretes. Porta ${port}.`)
   console.log('-------------------------------------------')
 })
