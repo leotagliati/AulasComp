@@ -1,4 +1,4 @@
-import 'package:exibe_imagens/src/app.dart';
+import 'package:exibe_imagens/src/appState.dart';
 import 'package:flutter/material.dart';
 
 void main() {
